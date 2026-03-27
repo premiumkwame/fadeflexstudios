@@ -584,126 +584,323 @@
    RESPONSIVE — TABLET ≤ 960px
    ============================================ */
 @media (max-width: 960px) {
-  /* Stack to single column */
   .booking-columns { grid-template-columns: 1fr; }
-  /* Hide sticky desktop calendar */
   #calDesktopCol { display: none; }
-  /* Show gender bubble as inline (hide fixed bubble) */
   .gender-bubble-wrapper { display: none; }
   .gender-toggle-mobile  { display: flex; }
 }
 
 /* ============================================
-   RESPONSIVE — PHONE ≤ 600px
+   RESPONSIVE — PHONE ≤ 480px
+   Full professional mobile layout
    ============================================ */
-@media (max-width: 600px) {
+@media (max-width: 480px) {
+
+  /* ── Reset page shell — fill screen, no outer padding ── */
   .booking-page {
-    padding: 76px 0 80px;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 0 120px;
+    overflow-x: hidden;
   }
 
-  /* Header — padded horizontally */
-  .booking-header {
-    padding: 0 5%;
-    margin-bottom: 1.4rem;
-  }
-
-  .booking-title {
-    font-size: clamp(1.7rem, 7vw, 2.2rem);
-    margin-bottom: 0.2rem;
-  }
-
-  /* Gender toggle — right under heading, horizontal pills */
-  .gender-toggle-mobile {
-    flex-direction: row;
+  /* ── Back button — sticky below navbar, full-width bar ── */
+  .back-btn {
+    display: flex;
     align-items: center;
-    gap: 8px;
-    margin-top: 10px;
-    flex-wrap: nowrap;
-  }
-  .gender-label-inline {
-    font-size: 0.65rem;
-    letter-spacing: 1.8px;
-  }
-  .gender-toggle-mobile .gender-btn {
-    padding: 7px 18px;
-    font-size: 0.8rem;
-  }
-
-  /* Left column full width, no gap padding */
-  .booking-left {
-    gap: 0;
+    margin: 0;
+    padding: 14px 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-primary);
+    position: sticky;
+    top: 66px;
+    z-index: 20;
+    width: 100%;
   }
 
-  /* Service image card — fills width edge-to-edge, taller portrait */
-  .service-img-card {
-    aspect-ratio: 4 / 3;
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
-    box-shadow: none;
+  /* ── Header — clear section with generous padding ── */
+  .booking-header {
+    padding: 28px 20px 22px;
     margin-bottom: 0;
+    border-bottom: 1px solid var(--border-subtle);
   }
 
-  /* Services section — padded, compact */
-  .services-section {
-    padding: 16px 5% 0;
-  }
-
-  .services-title {
-    font-size: 0.72rem;
+  .section-tag {
+    font-size: 0.68rem;
+    letter-spacing: 3.5px;
     margin-bottom: 10px;
   }
 
-  /* Services: horizontal swipe track on phone */
-  .service-track-wrapper {
-    overflow-x: auto;
-    overflow-y: visible;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding-bottom: 6px;
-    margin-right: -5%;
-    padding-right: 5%;
+  .booking-title {
+    font-size: clamp(1.8rem, 8vw, 2.2rem);
+    line-height: 1.1;
+    margin-bottom: 18px;
   }
-  .service-track-wrapper::-webkit-scrollbar { display: none; }
+
+  /* ── Gender toggle — clean inline row ── */
+  .gender-toggle-mobile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    margin-top: 0;
+    flex-wrap: nowrap;
+  }
+  .gender-label-inline {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .gender-toggle-mobile .gender-btn {
+    padding: 10px 26px;
+    font-size: 0.88rem;
+    border-radius: var(--radius-pill);
+  }
+
+  /* ── Left column — no gaps, each section self-contained ── */
+  .booking-left { gap: 0; }
+
+  /* ── Service image — edge-to-edge, cinematic ratio ── */
+  .service-img-card {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    box-shadow: 0 6px 32px var(--shadow-dark);
+  }
+
+  /* ── Services section — padded, 2-column GRID (stacked, not swipe) ── */
+  .services-section {
+    padding: 24px 20px 0;
+  }
+
+  .services-title {
+    font-size: 0.68rem;
+    letter-spacing: 3px;
+    margin-bottom: 14px;
+    color: var(--text-muted);
+  }
+
+  /* Kill swipe — restore normal wrapping flow */
+  .service-track-wrapper {
+    overflow: visible !important;
+    overflow-x: visible !important;
+    -webkit-overflow-scrolling: unset;
+    scrollbar-width: auto;
+    margin-right: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+  }
 
   .service-bubbles {
-    flex-wrap: nowrap;
-    width: max-content;
-    gap: 8px;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100% !important;
+    flex-wrap: unset;
   }
 
   .service-bubble {
-    padding: 9px 16px;
-    font-size: 0.8rem;
-    gap: 8px;
-  }
-  .service-price {
-    font-size: 0.72rem;
-    padding-left: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 14px 16px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    border-radius: 14px;
+    gap: 5px;
+    white-space: normal;
+    min-height: 60px;
   }
 
-  /* Mobile calendar trigger — full width, prominent */
-  .cal-mobile-trigger {
-    padding: 16px 5% 0;
+  .service-bubble span:first-child {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: inherit;
   }
+
+  .service-price {
+    font-size: 0.74rem;
+    padding-left: 0;
+    margin-left: 0;
+    border-left: none;
+    border-top: 1px solid currentColor;
+    padding-top: 4px;
+    opacity: 0.7;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+
+  /* ── Continue button — full width, bold CTA ── */
+  .cal-mobile-trigger {
+    padding: 20px 20px 0;
+  }
+
   .cal-trigger-btn {
     width: 100%;
+    display: flex;
+    align-items: center;
     justify-content: space-between;
-    padding: 15px 20px;
-    border-radius: 14px;
-    font-size: 0.9rem;
+    padding: 17px 24px;
+    border-radius: var(--radius-pill);
+    font-size: 0.95rem;
+    font-weight: 600;
+    background: var(--red-bright);
+    color: #fff;
+    border: none;
+    box-shadow: 0 6px 28px var(--shadow-red);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    letter-spacing: 0.3px;
   }
+  .cal-trigger-btn:active { transform: scale(0.97); background: var(--red-deep); }
+  .cal-trigger-icon { font-size: 1.2rem; }
+  .cal-trigger-arrow { font-size: 1.1rem; }
 
-  /* Calendar popup: compact bottom sheet */
+  /* ── Calendar popup — full-height bottom sheet ── */
   .cal-popup {
-    padding: 1rem 5% 3rem;
-    max-height: 88vh;
-    border-radius: 22px 22px 0 0;
+    padding: 0 20px 48px;
+    max-height: 92vh;
+    border-radius: 28px 28px 0 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
-  .cal-title { font-size: 1.1rem; }
-  .time-slots { grid-template-columns: repeat(3, 1fr); gap: 6px; }
-  .time-slot  { font-size: 0.7rem; padding: 8px 4px; }
-  .cal-day    { font-size: 0.72rem; }
-  .cal-days-header span { font-size: 0.58rem; }
+  /* Drag handle */
+  .cal-popup::before {
+    width: 44px;
+    height: 5px;
+    background: var(--border-subtle);
+    border-radius: 3px;
+    margin: 16px auto 22px;
+  }
+
+  .cal-popup-close {
+    top: 16px;
+    right: 18px;
+    width: 34px;
+    height: 34px;
+    font-size: 0.85rem;
+  }
+
+  /* Calendar header */
+  .calendar-header-bar {
+    margin-bottom: 20px;
+    padding-top: 0;
+  }
+
+  .cal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .cal-sub {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* Month nav — spacious */
+  .cal-nav {
+    margin-bottom: 16px;
+    align-items: center;
+  }
+
+  .cal-month-label {
+    font-size: 1.2rem;
+    letter-spacing: 4px;
+  }
+
+  .cal-nav-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    font-size: 1rem;
+  }
+
+  /* Day header row */
+  .cal-days-header {
+    margin-bottom: 6px;
+  }
+  .cal-days-header span {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    padding: 5px 0;
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* Day cells — generous tap targets */
+  .cal-grid {
+    gap: 5px;
+    margin-bottom: 24px;
+  }
+  .cal-day {
+    font-size: 0.85rem;
+    font-weight: 500;
+    min-height: 40px;
+    border-radius: 50%;
+  }
+
+  /* Time slots — 3 columns */
+  .time-slots-section { margin-bottom: 20px; }
+  .time-slots-title {
+    font-size: 0.66rem;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .time-slots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+  }
+  .time-slot {
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 11px 4px;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  /* Booking form */
+  .booking-form-section { margin-top: 4px; }
+  .form-title { font-size: 0.66rem; letter-spacing: 3px; margin-bottom: 14px; }
+  .form-input {
+    padding: 14px 16px;
+    font-size: 0.9rem;
+    border-radius: 12px;
+  }
+  .booking-summary {
+    padding: 13px 16px;
+    font-size: 0.84rem;
+    line-height: 1.8;
+    border-radius: 12px;
+  }
+  .btn-book {
+    padding: 16px;
+    font-size: 1rem;
+    border-radius: var(--radius-pill);
+    margin-top: 6px;
+    letter-spacing: 0.5px;
+  }
+  .booking-note {
+    font-size: 0.72rem;
+    margin-top: 10px;
+    line-height: 1.6;
+  }
 }

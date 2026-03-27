@@ -648,24 +648,7 @@ ul { list-style: none; }
   line-height: 1.4;
 }
 
-/* Master barber badge */
-.about-badge {
-  position: absolute;
-  top: 24px; right: -20px;
-  background: var(--red-bright);
-  color: #fff;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  padding: 16px 10px;
-  border-radius: var(--radius-pill);
-  box-shadow: 0 4px 20px var(--shadow-red);
-  writing-mode: vertical-lr;
-  text-orientation: upright;
-  word-spacing: 0.5em;
-  line-height: 1;
-}
+/* Master barber badge — removed */
 
 /* Years ring */
 .about-years-ring {
