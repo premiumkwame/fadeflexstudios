@@ -317,10 +317,6 @@
 /* ============================================
    MOBILE CALENDAR TRIGGER
    ============================================ */
-.cal-mobile-trigger {
-  /* display toggled by JS */
-}
-
 .cal-trigger-btn {
   width: 100%;
   display: flex;
@@ -601,10 +597,62 @@
    RESPONSIVE — PHONE ≤ 600px
    ============================================ */
 @media (max-width: 600px) {
-  .booking-page { padding: 80px 4% 60px; }
+  .booking-page {
+    padding: 76px 0 80px;
+  }
 
-  /* Slightly taller image card */
-  .service-img-card { aspect-ratio: 4 / 3; }
+  /* Header — padded horizontally */
+  .booking-header {
+    padding: 0 5%;
+    margin-bottom: 1.4rem;
+  }
+
+  .booking-title {
+    font-size: clamp(1.7rem, 7vw, 2.2rem);
+    margin-bottom: 0.2rem;
+  }
+
+  /* Gender toggle — right under heading, horizontal pills */
+  .gender-toggle-mobile {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: nowrap;
+  }
+  .gender-label-inline {
+    font-size: 0.65rem;
+    letter-spacing: 1.8px;
+  }
+  .gender-toggle-mobile .gender-btn {
+    padding: 7px 18px;
+    font-size: 0.8rem;
+  }
+
+  /* Left column full width, no gap padding */
+  .booking-left {
+    gap: 0;
+  }
+
+  /* Service image card — fills width edge-to-edge, taller portrait */
+  .service-img-card {
+    aspect-ratio: 4 / 3;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    box-shadow: none;
+    margin-bottom: 0;
+  }
+
+  /* Services section — padded, compact */
+  .services-section {
+    padding: 16px 5% 0;
+  }
+
+  .services-title {
+    font-size: 0.72rem;
+    margin-bottom: 10px;
+  }
 
   /* Services: horizontal swipe track on phone */
   .service-track-wrapper {
@@ -612,39 +660,50 @@
     overflow-y: visible;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    padding-bottom: 8px;
-    /* Bleed to edge so last bubble fades nicely */
-    margin-right: -4%;
-    padding-right: 4%;
+    padding-bottom: 6px;
+    margin-right: -5%;
+    padding-right: 5%;
   }
   .service-track-wrapper::-webkit-scrollbar { display: none; }
 
   .service-bubbles {
     flex-wrap: nowrap;
     width: max-content;
+    gap: 8px;
+  }
+
+  .service-bubble {
+    padding: 9px 16px;
+    font-size: 0.8rem;
+    gap: 8px;
+  }
+  .service-price {
+    font-size: 0.72rem;
+    padding-left: 8px;
+  }
+
+  /* Mobile calendar trigger — full width, prominent */
+  .cal-mobile-trigger {
+    padding: 16px 5% 0;
+  }
+  .cal-trigger-btn {
+    width: 100%;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-radius: 14px;
+    font-size: 0.9rem;
   }
 
   /* Calendar popup: compact bottom sheet */
   .cal-popup {
-    padding: 1.2rem 1rem 2.5rem;
-    max-height: 82vh;
+    padding: 1rem 5% 3rem;
+    max-height: 88vh;
     border-radius: 22px 22px 0 0;
   }
 
-  .time-slots { grid-template-columns: repeat(4, 1fr); gap: 4px; }
-  .time-slot  { font-size: 0.66rem; padding: 6px 2px; }
+  .cal-title { font-size: 1.1rem; }
+  .time-slots { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .time-slot  { font-size: 0.7rem; padding: 8px 4px; }
   .cal-day    { font-size: 0.72rem; }
   .cal-days-header span { font-size: 0.58rem; }
-
-  /* Gender pills: horizontal, no box around them */
-  .gender-toggle-mobile {
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-    margin-top: 12px;
-  }
-  .gender-toggle-mobile .gender-btn {
-    padding: 8px 20px;
-    font-size: 0.8rem;
-  }
 }

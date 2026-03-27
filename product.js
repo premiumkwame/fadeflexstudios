@@ -49,6 +49,10 @@ document.addEventListener('DOMContentLoaded', () => {
   loadDefaultImage();
   renderCalendar('calendarCard');
   updateSummary();
+
+  // Always show mobile calendar trigger — first service is shown by default
+  const trigger = document.getElementById('calMobileTrigger');
+  if (trigger) trigger.style.display = 'block';
 });
 
 /* ============================================================
@@ -114,7 +118,13 @@ function loadDefaultImage() {
       label.classList.add('visible');
     }
   };
-  img.onerror = () => { /* keep placeholder */ };
+  img.onerror = () => {
+    if (placeholder) placeholder.classList.add('hidden');
+    if (label) {
+      label.textContent = `${first.name} — ${first.price}`;
+      label.classList.add('visible');
+    }
+  };
   img.src = first.img;
   img.alt = first.name;
 }
@@ -264,8 +274,8 @@ function buildCalendarHTML() {
 
   return `
     <div class="calendar-header-bar">
-      <h3 class="cal-title">Book Your Date</h3>
-      <p class="cal-sub">Syncs to Google Calendar</p>
+      <h3 class="cal-title">&#128197; Book Your Date</h3>
+      <p class="cal-sub">Slots confirmed via Google Calendar</p>
     </div>
     <div class="cal-nav">
       <button class="cal-nav-btn" onclick="shiftMonth(-1)">&#8592;</button>

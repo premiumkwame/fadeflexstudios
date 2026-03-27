@@ -656,14 +656,15 @@ ul { list-style: none; }
   color: #fff;
   font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 4px;
   text-transform: uppercase;
-  padding: 10px 16px;
+  padding: 16px 10px;
   border-radius: var(--radius-pill);
   box-shadow: 0 4px 20px var(--shadow-red);
   writing-mode: vertical-lr;
-  text-orientation: mixed;
-  transform: rotate(180deg);
+  text-orientation: upright;
+  word-spacing: 0.5em;
+  line-height: 1;
 }
 
 /* Years ring */
