@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book a Session — Fade Flex Studios</title>
+
+  <!-- THEME INIT: runs before paint — prevents flash on load and back-nav -->
+  <script>
+    (function(){
+      var stored = localStorage.getItem('ffs-theme');
+      if (stored) {
+        document.documentElement.setAttribute('data-theme', stored);
+      } else {
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="productstyle.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ======= NAVBAR ======= -->
+  <nav class="navbar">
+    <div class="nav-logo"><a href="index.html">FADE FLEX <span>STUDIOS</span></a></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#experience">Experience</a></li>
+      <li><a href="product.html" class="nav-cta">Book Now</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="toggle-icon"></span>
+      </button>
+      <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <div class="mobile-nav-overlay" id="mobileOverlay"></div>
+  <div class="mobile-nav-drawer" id="mobileDrawer">
+    <button class="drawer-close" id="drawerClose">&#10005;</button>
+    <p class="drawer-brand">FADE FLEX <span>STUDIOS</span></p>
+    <ul>
+      <li><a href="index.html"            onclick="closeDrawer()">Home</a></li>
+      <li><a href="index.html#about"      onclick="closeDrawer()">About</a></li>
+      <li><a href="index.html#experience" onclick="closeDrawer()">Experience</a></li>
+      <li><a href="product.html" class="drawer-cta">Book Now</a></li>
+    </ul>
+  </div>
+
+  <!-- ======= CALENDAR POPUP — mobile bottom sheet ======= -->
+  <div class="cal-popup-overlay" id="calOverlay" onclick="closeCalPopup()"></div>
+  <div class="cal-popup" id="calPopup">
+    <button class="cal-popup-close" onclick="closeCalPopup()">&#10005;</button>
+    <div id="calPopupContent"></div>
+  </div>
+
+  <!-- ======= MAIN ======= -->
+  <main class="booking-page">
+
+    <!-- BACK BUTTON -->
+    <a href="index.html" class="back-btn" aria-label="Back to home">
+      <span class="back-arrow">&#8592;</span>
+      <span class="back-label">Back</span>
+    </a>
+
+    <!-- ── GENDER BUBBLE — lower left corner (desktop) ── -->
+    <div class="gender-bubble-wrapper" id="genderBubble">
+      <p class="gender-label">I am</p>
+      <div class="gender-options">
+        <button class="gender-btn active" data-gender="male"   id="btnMale">Male</button>
+        <button class="gender-btn"        data-gender="female" id="btnFemale">Female</button>
+      </div>
+    </div>
+
+    <!-- ── PAGE HEADER ── -->
+    <div class="booking-header">
+      <p class="section-tag">Book Your Session</p>
+      <h1 class="booking-title">Choose Your <span>Style</span></h1>
+      <p class="booking-sub">Select a service — your image updates instantly.</p>
+
+      <!-- Gender toggle inline (mobile only — same line as header) -->
+      <div class="gender-toggle-mobile" id="genderToggleMobile">
+        <span class="gender-label-inline">I am</span>
+        <button class="gender-btn active" data-gender="male"   id="btnMaleMobile">Male</button>
+        <button class="gender-btn"        data-gender="female" id="btnFemaleMobile">Female</button>
+      </div>
+    </div>
+
+    <!-- ── TWO COLUMN LAYOUT ── -->
+    <div class="booking-columns">
+
+      <!-- LEFT: image card + services -->
+      <div class="booking-left">
+
+        <!-- SERVICE IMAGE CARD -->
+        <div class="service-img-card" id="serviceImgCard">
+          <img src="" alt="" class="service-img" id="serviceImg"/>
+          <img src="" alt="" class="service-img service-img-next" id="serviceImgNext"/>
+          <div class="service-img-placeholder" id="serviceImgPlaceholder">
+            <p>Select a service below</p>
+          </div>
+          <div class="service-img-shimmer" id="serviceImgShimmer"></div>
+          <div class="service-img-label"  id="serviceImgLabel"></div>
+        </div>
+
+        <!-- SERVICES -->
+        <div class="services-section">
+          <h3 class="services-title">Available Services</h3>
+          <!-- Horizontal swipe track on mobile, wrapping on desktop -->
+          <div class="service-track-wrapper">
+            <div class="service-bubbles" id="serviceBubbles">
+              <!-- populated by product.js -->
+            </div>
+          </div>
+        </div>
+
+        <!-- MOBILE ONLY: calendar trigger shown after service selected -->
+        <div class="cal-mobile-trigger" id="calMobileTrigger" style="display:none;">
+          <button class="cal-trigger-btn" onclick="openCalPopup()">
+            <span class="cal-trigger-icon">&#128197;</span>
+            <span class="cal-trigger-text">Pick a Date &amp; Time</span>
+            <span class="cal-trigger-arrow">&#8594;</span>
+          </button>
+        </div>
+
+      </div><!-- /booking-left -->
+
+      <!-- RIGHT: Calendar (desktop) -->
+      <div class="booking-right" id="calDesktopCol">
+        <div class="calendar-card" id="calendarCard">
+          <!-- rendered by product.js -->
+        </div>
+      </div>
+
+    </div><!-- /booking-columns -->
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <!-- PASTE YOUR FOOTER CODE HERE -->
+    <div class="footer-inner">
+      <p class="footer-brand">FADE FLEX STUDIOS</p>
+      <p class="footer-copy">&copy; 2025 Fade Flex Studios. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="product.js"></script>
+</body>
+</html>

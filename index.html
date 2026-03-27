@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fade Flex Studios</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- THEME INIT: runs before paint to prevent flash -->
+  <script>
+    (function(){
+      var stored = localStorage.getItem('ffs-theme');
+      if (stored) {
+        document.documentElement.setAttribute('data-theme', stored);
+      } else {
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+      }
+    })();
+  </script>
+
+  <!-- ======= NAVBAR ======= -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-logo">FADE FLEX <span>STUDIOS</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="product.html" class="nav-cta">Book Now</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="toggle-icon"></span>
+      </button>
+      <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <div class="mobile-nav-overlay" id="mobileOverlay"></div>
+  <div class="mobile-nav-drawer" id="mobileDrawer">
+    <button class="drawer-close" id="drawerClose">&#10005;</button>
+    <p class="drawer-brand">FADE FLEX <span>STUDIOS</span></p>
+    <ul>
+      <li><a href="#hero"       onclick="closeDrawer()">Home</a></li>
+      <li><a href="#about"      onclick="closeDrawer()">About</a></li>
+      <li><a href="#experience" onclick="closeDrawer()">Experience</a></li>
+      <li><a href="product.html" class="drawer-cta">Book Now</a></li>
+    </ul>
+  </div>
+
+  <!-- ======= HERO ======= -->
+  <section class="hero" id="hero">
+
+    <!-- Ambient background layers -->
+    <div class="hero-bg-red"></div>
+    <div class="hero-bg-blue"></div>
+    <div class="hero-grain"></div>
+
+    <!-- Left: copy -->
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-text">Premium Barbering · Accra</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="ht-line ht-serif">Where</span>
+        <span class="ht-line ht-display">Sharp</span>
+        <span class="ht-line ht-serif-italic">meets style.</span>
+      </h1>
+
+      <p class="hero-sub">Every cut is a signature. Every fade is a statement.<br/>Step in and let the blade do the talking.</p>
+
+      <div class="hero-btns">
+        <a href="product.html" class="btn-primary">Book a Session</a>
+        <a href="#about" class="btn-ghost">Our Story</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">8+</span>
+          <span class="stat-div"></span>
+          <p class="stat-label">Years Cutting</p>
+        </div>
+        <div class="stat">
+          <span class="stat-num">4K+</span>
+          <span class="stat-div"></span>
+          <p class="stat-label">Clients Served</p>
+        </div>
+        <div class="stat">
+          <span class="stat-num">100%</span>
+          <span class="stat-div"></span>
+          <p class="stat-label">Satisfaction</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: image -->
+    <div class="hero-right">
+      <div class="hero-img-outer">
+        <div class="hero-img-card" id="heroImgCard">
+          <!-- HERO IMAGE — place your photo as images/hero.jpg -->
+          <img src="images/hero.jpg" alt="Fade Flex Studios" class="hero-img" id="heroImg"/>
+          <div class="hero-img-fallback">
+            <p>Add hero image</p>
+            <code>images/hero.jpg</code>
+          </div>
+        </div>
+        <div class="hero-img-accent-line"></div>
+        <div class="hero-img-badge">EST. 2016</div>
+        <div class="hero-img-tag">Accra, Ghana</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ======= ABOUT ======= -->
+  <section class="about" id="about">
+
+    <div class="about-bg-texture"></div>
+
+    <div class="about-inner">
+
+      <!-- Left: image stack -->
+      <div class="about-visual">
+        <div class="about-img-wrap" id="aboutImgCard">
+          <!-- OWNER PHOTO — place as images/owner.jpg -->
+          <img src="images/owner.jpg" alt="Founder" class="about-img" id="ownerImg"/>
+          <div class="about-img-fallback">
+            <p>Owner Photo</p>
+            <code>images/owner.jpg</code>
+          </div>
+        </div>
+        <div class="about-quote-chip">
+          <span class="quote-mark">&ldquo;</span>
+          <p>Every cut tells a story.</p>
+        </div>
+        <div class="about-badge">Master Barber</div>
+        <div class="about-years-ring">
+          <span>8</span>
+          <p>YRS</p>
+        </div>
+      </div>
+
+      <!-- Right: copy -->
+      <div class="about-copy">
+        <p class="section-tag">About the Founder</p>
+        <h2 class="section-title">Craft.<br/>Faith.<br/><em>Precision.</em></h2>
+
+        <p class="about-body">
+          Fade Flex Studios was born from a passion for perfection and a deep respect for the craft. Our founder — a dedicated Muslim craftsman — brings discipline, patience, and artistry to every single cut.
+        </p>
+        <p class="about-body">
+          Every client who sits in our chair deserves more than a haircut. They deserve confidence. We take pride in clean lines, sharp fades, and an atmosphere built on brotherhood, respect, and excellence.
+        </p>
+
+        <div class="about-values">
+          <div class="value-pill">Precision</div>
+          <div class="value-pill">Respect</div>
+          <div class="value-pill">Brotherhood</div>
+          <div class="value-pill">Excellence</div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ======= EXPERIENCE ======= -->
+  <section class="experience" id="experience">
+
+    <div class="exp-header">
+      <p class="section-tag">The Fade Flex Experience</p>
+      <h2 class="section-title">More Than A <span>Haircut</span></h2>
+      <p class="exp-sub">From the moment you walk in, every detail is curated for you.</p>
+    </div>
+
+    <div class="exp-track-wrapper">
+      <div class="exp-grid">
+
+        <div class="exp-card exp-card--featured">
+          <div class="exp-card-inner">
+            <h3>Master Craft &amp; Premium Products</h3>
+            <p>Our signature fades are executed with surgical precision — no rushing, no shortcuts. Finished with top-tier grooming products that keep your style fresh all week.</p>
+          </div>
+        </div>
+
+        <div class="exp-card">
+          <div class="exp-card-inner">
+            <h3>Respectful Space</h3>
+            <p>A welcoming environment for all — built on Muslim values of respect, integrity, and brotherhood.</p>
+          </div>
+        </div>
+
+        <div class="exp-card">
+          <div class="exp-card-inner">
+            <h3>Easy Booking</h3>
+            <p>No queues. Reserve your slot online in seconds and we'll be ready the moment you walk in.</p>
+            <a href="product.html" class="exp-link">Book Now &rarr;</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ======= FOOTER ======= -->
+  <footer class="footer" id="footer">
+    <!-- PASTE YOUR FOOTER CODE HERE -->
+    <div class="footer-inner">
+      <p class="footer-brand">FADE FLEX STUDIOS</p>
+      <p class="footer-copy">&copy; 2025 Fade Flex Studios. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
