@@ -650,19 +650,20 @@ ul { list-style: none; }
 
 /* Master barber badge — removed */
 
-/* Years ring */
+/* Years ring — inside img-wrap, bottom-right corner */
 .about-years-ring {
   position: absolute;
-  bottom: -24px; right: 20px;
-  width: 72px; height: 72px;
+  bottom: 18px; right: 18px;
+  width: 68px; height: 68px;
   border-radius: 50%;
   background: var(--bg-primary);
-  border: 2px solid var(--red-bright);
+  border: 2.5px solid var(--red-bright);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 20px var(--shadow-red);
+  z-index: 4;
 }
 .about-years-ring span {
   font-family: 'Cormorant Garamond', serif;
