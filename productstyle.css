@@ -7,7 +7,7 @@
    BACK BUTTON
    ============================================ */
 .back-btn {
-  display: inline-flex;
+  display: inline-flex; 
   align-items: center;
   gap: 8px;
   color: var(--text-muted);
@@ -233,7 +233,7 @@
 .service-img-label {
   position: absolute;
   bottom: 14px; left: 14px;
-  background: rgba(8, 8, 14, 0.84);
+  background: rgba(16, 16, 18, 0.84);
   color: #fff;
   font-size: 0.74rem;
   font-weight: 700;

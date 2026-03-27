@@ -9,20 +9,22 @@
    img: relative path to image file e.g. images/fade.jpg
    ============================================================ */
 const SERVICES = [
-  { id: 'fade',   name: 'Fade Cut',    price: 'GH₵ 80',  gender: 'male',   img: 'images/fade.jpg'   },
+  { id: 'fade',   name: 'Fade Cut',    price: 'GH₵ 80',  gender: 'male',   img: 'images/locks.jpg'  },
   { id: 'lineup', name: 'Line Up',     price: 'GH₵ 50',  gender: 'male',   img: 'images/lineup.jpg' },
   { id: 'waves',  name: '360 Waves',   price: 'GH₵ 100', gender: 'male',   img: 'images/waves.jpg'  },
   { id: 'beard',  name: 'Beard Trim',  price: 'GH₵ 70',  gender: 'male',   img: 'images/beard.jpg'  },
-  { id: 'shave',  name: 'Clean Shave', price: 'GH₵ 60',  gender: 'both',   img: 'images/shave.jpg'  },
+  { id: 'shave',  name: 'Clean Shave', price: 'GH₵ 60',  gender: 'male',   img: 'images/shave.jpg'  },
+  { id: 'pixie',  name: 'Pixie Cut',   price: 'GH₵ 60',  gender: 'female', img: 'images/pixie.jpg'  },                                    
   { id: 'braids', name: 'Braids',      price: 'GH₵ 150', gender: 'female', img: 'images/braids.jpg' },
+  { id: 'rows',   name: 'Corn Rows',   price: 'GH₵ 30',  gender: 'female', img:  'images/cornrows.jpg'},
   { id: 'dye',    name: 'Hair Dye',    price: 'GH₵ 200', gender: 'both',   img: 'images/dye.jpg'    },
-  { id: 'loc',    name: 'Dreadlocks',  price: 'GH₵ 250', gender: 'both',   img: 'images/loc.jpg'    },
+  { id: 'loc',    name: 'Dreadlocks',  price: 'GH₵ 250', gender: 'both',   img: 'images/dread.jpg'  },
 ];
 
 /* ============================================================
    OWNER CONFIG — change OWNER_EMAIL to your Gmail
    ============================================================ */
-const OWNER_EMAIL           = 'owner@fadeflexstudios.com';
+const OWNER_EMAIL           = 'kransly007@gmail.com';
 const SHOP_NAME             = 'Fade Flex Studios';
 const SHOP_LOCATION         = 'Accra, Ghana';
 const BOOKING_DURATION_MINS = 60;
