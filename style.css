@@ -977,3 +977,163 @@ ul { list-style: none; }
     min-height: 200px;
   }
 }
+/* ============================================
+   FOOTER
+   ============================================ */
+footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  padding: 60px 5% 30px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 40px;
+  max-width: 1160px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 220px;
+}
+
+.footer-section h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  color: var(--text-primary);
+  margin-bottom: 1.2rem;
+}
+
+.footer-section p,
+.footer-section li {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+  color: var(--text-muted);
+}
+
+.footer-section a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-section a:hover {
+  color: var(--red-bright);
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ---- Social icons ---- */
+.social-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 1.2rem;
+  justify-content: flex-start;
+}
+
+.social-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: background 0.22s, border-color 0.22s, color 0.22s, transform 0.22s;
+}
+
+.social-icons a:hover {
+  background: var(--blue-bright);
+  border-color: var(--blue-bright);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px var(--shadow-blue);
+}
+
+/* ---- Contact icons ---- */
+.footer-section .fas,
+.footer-section .far,
+.footer-section .fab,
+.footer-section .fa-solid,
+.footer-section .fa-brands {
+  color: var(--red-bright);
+  width: 16px;
+  text-align: center;
+  margin-right: 6px;
+}
+
+/* ---- Divider + copyright ---- */
+.footer-line {
+  border: none;
+  border-top: 1px solid var(--border-subtle);
+  margin: 24px 0 16px;
+}
+
+.year {
+  text-align: center;
+}
+
+.copy {
+  font-size: 0.74rem;
+  color: var(--text-dim);
+  letter-spacing: 0.3px;
+}
+
+/* ============================================
+   RESPONSIVE — TABLET <= 768px
+   ============================================ */
+@media (max-width: 768px) {
+  .footer-content {
+    gap: 28px;
+  }
+  .footer-section {
+    min-width: 180px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE — MOBILE <= 480px
+   ============================================ */
+@media (max-width: 480px) {
+  footer {
+    padding: 48px 5% 24px;
+    text-align: center;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 32px;
+    margin-bottom: 28px;
+  }
+
+  .footer-section {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .footer-section h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+}
