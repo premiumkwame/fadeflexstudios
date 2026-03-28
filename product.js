@@ -17,8 +17,8 @@ const SERVICES = [
   { id: 'pixie',  name: 'Pixie Cut',   price: 'GH₵ 60',  gender: 'female', img: 'images/pixie.jpg'  },                                    
   { id: 'braids', name: 'Braids',      price: 'GH₵ 150', gender: 'female', img: 'images/braids.jpg' },
   { id: 'rows',   name: 'Corn Rows',   price: 'GH₵ 30',  gender: 'female', img:  'images/cornrows.jpg'},
-  { id: 'dye',    name: 'Hair Dye',    price: 'GH₵ 40', gender: 'female',   img: 'images/dyef.jpg'},
-  { id: 'dye',    name: 'Men\'s Hair Dye', price: 'GH₵ 30', gender: 'male', img: 'images/dyem.jpg'},
+  { id: 'dyef',   name: 'Hair Dye',        price: 'GH₵ 40', gender: 'female', img: 'images/dyef.jpg'},
+  { id: 'dyem',   name: 'Men\'s Hair Dye', price: 'GH₵ 30', gender: 'male',   img: 'images/dyem.jpg'},
   { id: 'loc',    name: 'Dreadlocks',  price: 'GH₵ 250', gender: 'male',   img: 'images/locks.jpg'  },
 ];
 
@@ -111,9 +111,18 @@ function loadDefaultImage() {
   const label       = document.getElementById('serviceImgLabel');
   if (!img) return;
 
+  // Clear any stale handlers FIRST so they never fire after a crossfade
+  img.onload  = null;
+  img.onerror = null;
   img.classList.remove('visible');
 
-  img.onload = () => {
+  const preload = new Image();
+  preload.onload = () => {
+    // Clear handlers before touching img.src so reassignment never re-triggers
+    img.onload  = null;
+    img.onerror = null;
+    img.src = first.img;
+    img.alt = first.name;
     img.classList.add('visible');
     if (placeholder) placeholder.classList.add('hidden');
     if (label) {
@@ -121,7 +130,9 @@ function loadDefaultImage() {
       label.classList.add('visible');
     }
   };
-  img.onerror = () => {
+  preload.onerror = () => {
+    img.onload  = null;
+    img.onerror = null;
     if (placeholder) {
       placeholder.textContent = `${first.name} — place image at: ${first.img}`;
       placeholder.classList.remove('hidden');
@@ -131,10 +142,9 @@ function loadDefaultImage() {
       label.classList.add('visible');
     }
   };
-  img.src = first.img;
-  img.alt = first.name;
+  preload.src = first.img;
 
-  // Always set label even if image cached/instant
+  // Set label immediately (even if image loads from cache instantly)
   if (label) {
     label.textContent = `${first.name} — ${first.price}`;
     label.classList.add('visible');
@@ -160,7 +170,7 @@ function renderServiceBubbles() {
 }
 
 function selectService(id) {
-  const found = SERVICES.find(s => s.id === id);
+  const found = SERVICES.find(s => s.id === id && (s.gender === currentGender || s.gender === 'both'));
   // Cannot deselect by tapping the same one
   if (!found || selectedService?.id === id) return;
 
@@ -220,33 +230,37 @@ function crossfadeToImage(service) {
     if (shimmer) shimmer.classList.remove('loading');
     if (ph) ph.classList.add('hidden');
 
-    // Bring next image in behind current
+    // Fade imgB in ON TOP of imgA — imgA stays visible underneath, no blink
+    imgB.style.zIndex = '3';
     imgB.src = service.img;
     imgB.alt = service.name;
     imgB.classList.add('visible');
 
-    // Fade out current
-    imgA.classList.remove('visible');
-
-    // After transition settle, promote imgB → imgA
+    // Once imgB has fully faded in, silently swap imgA underneath it
     setTimeout(() => {
-      // Guard: abort if superseded
       if (myGen !== _crossfadeGen) return;
+      imgA.onload  = null;
+      imgA.onerror = null;
       imgA.src = service.img;
       imgA.alt = service.name;
       imgA.classList.add('visible');
+      // Now fade imgB back out and restore z-index
       imgB.classList.remove('visible');
-      imgB.src = '';
-    }, 580);
+      imgB.style.zIndex = '';
+      setTimeout(() => {
+        if (myGen !== _crossfadeGen) return;
+        imgB.src = '';
+      }, 560);
+    }, 560);
 
-    // Update label with slight delay
+    // Update label mid-transition
     if (label) {
       label.classList.remove('visible');
       setTimeout(() => {
         if (myGen !== _crossfadeGen) return;
         label.textContent = `${service.name} — ${service.price}`;
         label.classList.add('visible');
-      }, 220);
+      }, 280);
     }
   };
 
