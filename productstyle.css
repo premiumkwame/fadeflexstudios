@@ -151,6 +151,11 @@
   top: 82px;
 }
 
+/* Hide the "Continue — Pick Date & Time" button on desktop */
+.cal-mobile-trigger {
+  display: none !important;
+}
+
 /* ============================================
    SERVICE IMAGE CARD
    (same shadow as calendar card)
@@ -665,15 +670,17 @@
   /* ── Left column — no gaps, each section self-contained ── */
   .booking-left { gap: 0; }
 
-  /* ── Service image — edge-to-edge, cinematic ratio ── */
+  /* ── Service image — rounded, kept from screen edges, calendar-matching shadow ── */
   .service-img-card {
-    width: 100%;
+    width: calc(100% - 32px);
+    margin: 0 auto;
     aspect-ratio: 16 / 10;
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
-    border-top: none;
-    box-shadow: 0 6px 32px var(--shadow-dark);
+    border-radius: var(--radius-lg);
+    border: 1.5px solid var(--border-subtle);
+    box-shadow:
+      0 0 0 1px var(--border-subtle),
+      0 20px 60px var(--shadow-dark),
+      0 4px 20px var(--shadow-red);
   }
 
   /* ── Services section — padded, 2-column GRID (stacked, not swipe) ── */
@@ -749,8 +756,9 @@
     font-weight: 500;
   }
 
-  /* ── Continue button — full width, bold CTA ── */
+  /* ── Continue button — full width, bold CTA — shown on mobile only ── */
   .cal-mobile-trigger {
+    display: block !important;
     padding: 20px 20px 0;
   }
 

@@ -373,7 +373,7 @@ ul { list-style: none; }
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(4.5rem, 10vw, 10rem);
   color: var(--red-bright);
-  letter-spacing: -1px;
+  letter-spacing: 4px;
   line-height: 0.88;
   margin: 0.05em 0;
   /* Outlined stroke effect */
@@ -408,11 +408,15 @@ ul { list-style: none; }
 .hero-stats {
   display: flex;
   gap: 0;
+  align-items: stretch;
 }
 .stat {
   display: flex;
-  align-items: center;
-  gap: 1.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding-right: 2.8rem;
+  position: relative;
 }
 .stat-num {
   font-family: 'Cormorant Garamond', serif;
@@ -422,15 +426,22 @@ ul { list-style: none; }
   line-height: 1;
   letter-spacing: -0.5px;
 }
+/* stat-div lives inside .stat in the HTML — hide it from flow,
+   and use a ::after on .stat instead for the vertical separator */
 .stat-div {
-  display: block;
-  width: 1px;
-  height: 36px;
-  background: var(--border-subtle);
-  margin: 0 1.5rem;
-  flex-shrink: 0;
+  display: none;
 }
-.stat:last-child .stat-div { display: none; }
+.stat:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--border-strong);
+  opacity: 0.6;
+}
+.stat:last-child { padding-right: 0; }
 .stat-label {
   font-size: 0.7rem;
   font-weight: 600;
@@ -438,6 +449,7 @@ ul { list-style: none; }
   letter-spacing: 1.5px;
   text-transform: uppercase;
   line-height: 1.4;
+  padding-left: 0;
 }
 
 /* ---- Hero Right — image ---- */
@@ -889,8 +901,49 @@ ul { list-style: none; }
   .hero { padding: 86px 4% 50px; gap: 2rem; }
   .hero-img-card { width: 88vw; height: 56vw; min-height: 240px; }
   .hero-img-accent-line { display: none; }
-  .hero-stats { gap: 0; flex-wrap: wrap; row-gap: 1rem; }
-  .stat-div { height: 28px; margin: 0 1rem; }
+
+  /* Mobile stats: horizontal layout preserved, text below numbers */
+  .hero-stats {
+    gap: 0;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch;
+  }
+  .stat {
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+    padding-right: 0;
+    /* Use border-right for dividers on mobile — simpler than pseudo on flex children */
+  }
+  /* Re-enable the in-flow stat-div for mobile since stats are centered flex */
+  .stat-div {
+    display: block !important;
+    width: 1px;
+    height: 32px;
+    background: var(--border-strong);
+    opacity: 0.7;
+    flex-shrink: 0;
+    align-self: center;
+    /* position it as a spacer between stats */
+    margin: 0 10px;
+  }
+  /* Hide pseudo-element separators on mobile (use stat-div instead) */
+  .stat::after { display: none !important; }
+  /* Last stat: hide its stat-div */
+  .stat:last-child .stat-div { display: none !important; }
+  .stat:last-child { padding-right: 0; }
+  .stat-num {
+    font-size: 1.8rem;
+  }
+  .stat-label {
+    font-size: 0.58rem;
+    letter-spacing: 1px;
+    text-align: center;
+    white-space: nowrap;
+  }
 
   .about { padding: 60px 4% 70px; }
   .about-inner { gap: 3.5rem; }

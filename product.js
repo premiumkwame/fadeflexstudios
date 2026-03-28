@@ -9,7 +9,7 @@
    img: relative path to image file e.g. images/fade.jpg
    ============================================================ */
 const SERVICES = [
-  { id: 'fade',   name: 'Fade Cut',    price: 'GH₵ 80',  gender: 'male',   img: 'images/locks.jpg'  },
+  { id: 'fade',   name: 'Fade Cut',    price: 'GH₵ 80',  gender: 'male',   img: 'images/fade.jpg'  },
   { id: 'lineup', name: 'Line Up',     price: 'GH₵ 50',  gender: 'male',   img: 'images/lineup.jpg' },
   { id: 'waves',  name: '360 Waves',   price: 'GH₵ 100', gender: 'male',   img: 'images/waves.jpg'  },
   { id: 'beard',  name: 'Beard Trim',  price: 'GH₵ 70',  gender: 'male',   img: 'images/beard.jpg'  },
@@ -17,8 +17,9 @@ const SERVICES = [
   { id: 'pixie',  name: 'Pixie Cut',   price: 'GH₵ 60',  gender: 'female', img: 'images/pixie.jpg'  },                                    
   { id: 'braids', name: 'Braids',      price: 'GH₵ 150', gender: 'female', img: 'images/braids.jpg' },
   { id: 'rows',   name: 'Corn Rows',   price: 'GH₵ 30',  gender: 'female', img:  'images/cornrows.jpg'},
-  { id: 'dye',    name: 'Hair Dye',    price: 'GH₵ 200', gender: 'both',   img: 'images/dye.jpg'    },
-  { id: 'loc',    name: 'Dreadlocks',  price: 'GH₵ 250', gender: 'both',   img: 'images/dread.jpg'  },
+  { id: 'dye',    name: 'Hair Dye',    price: 'GH₵ 40', gender: 'female',   img: 'images/dyef.jpg'},
+  { id: 'dye',    name: 'Men\'s Hair Dye', price: 'GH₵ 30', gender: 'male', img: 'images/dyem.jpg'},
+  { id: 'loc',    name: 'Dreadlocks',  price: 'GH₵ 250', gender: 'male',   img: 'images/locks.jpg'  },
 ];
 
 /* ============================================================
@@ -121,7 +122,10 @@ function loadDefaultImage() {
     }
   };
   img.onerror = () => {
-    if (placeholder) placeholder.classList.add('hidden');
+    if (placeholder) {
+      placeholder.textContent = `${first.name} — place image at: ${first.img}`;
+      placeholder.classList.remove('hidden');
+    }
     if (label) {
       label.textContent = `${first.name} — ${first.price}`;
       label.classList.add('visible');
@@ -129,6 +133,12 @@ function loadDefaultImage() {
   };
   img.src = first.img;
   img.alt = first.name;
+
+  // Always set label even if image cached/instant
+  if (label) {
+    label.textContent = `${first.name} — ${first.price}`;
+    label.classList.add('visible');
+  }
 }
 
 /* ============================================================
@@ -170,11 +180,23 @@ function selectService(id) {
 
   updateSummary();
   refreshCalendars();
+
+  // On mobile: scroll to the service image card
+  if (window.innerWidth <= 960) {
+    const card = document.getElementById('serviceImgCard');
+    if (card) {
+      const offset = card.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: offset, behavior: 'smooth' });
+    }
+  }
 }
 
 /* ============================================================
    BUTTERY IMAGE CROSSFADE
+   Uses a generation counter so rapid taps never glitch back
    ============================================================ */
+let _crossfadeGen = 0; // increments on every call — stale timeouts check this
+
 function crossfadeToImage(service) {
   const imgA    = document.getElementById('serviceImg');
   const imgB    = document.getElementById('serviceImgNext');
@@ -183,11 +205,18 @@ function crossfadeToImage(service) {
   const label   = document.getElementById('serviceImgLabel');
   if (!imgA || !imgB) return;
 
+  // Bump generation — any in-flight timeout from a previous call will see a
+  // stale gen and bail out, preventing the "snap back" glitch
+  const myGen = ++_crossfadeGen;
+
   if (shimmer) shimmer.classList.add('loading');
 
   const preload = new Image();
 
   preload.onload = () => {
+    // If another crossfade started while this one was loading, abort
+    if (myGen !== _crossfadeGen) return;
+
     if (shimmer) shimmer.classList.remove('loading');
     if (ph) ph.classList.add('hidden');
 
@@ -199,8 +228,10 @@ function crossfadeToImage(service) {
     // Fade out current
     imgA.classList.remove('visible');
 
-    // After transition settle, swap references
+    // After transition settle, promote imgB → imgA
     setTimeout(() => {
+      // Guard: abort if superseded
+      if (myGen !== _crossfadeGen) return;
       imgA.src = service.img;
       imgA.alt = service.name;
       imgA.classList.add('visible');
@@ -212,6 +243,7 @@ function crossfadeToImage(service) {
     if (label) {
       label.classList.remove('visible');
       setTimeout(() => {
+        if (myGen !== _crossfadeGen) return;
         label.textContent = `${service.name} — ${service.price}`;
         label.classList.add('visible');
       }, 220);
@@ -219,13 +251,18 @@ function crossfadeToImage(service) {
   };
 
   preload.onerror = () => {
+    if (myGen !== _crossfadeGen) return;
     if (shimmer) shimmer.classList.remove('loading');
     if (ph) {
       ph.textContent = `${service.name} — place image at: ${service.img}`;
       ph.classList.remove('hidden');
     }
     imgA.classList.remove('visible');
-    if (label) label.classList.remove('visible');
+    // Still show label even when image is missing
+    if (label) {
+      label.textContent = `${service.name} — ${service.price}`;
+      label.classList.add('visible');
+    }
   };
 
   preload.src = service.img;
@@ -351,14 +388,58 @@ function selectTime(t) {
 function openCalPopup() {
   renderCalendar('calPopupContent');
   document.getElementById('calOverlay')?.classList.add('open');
-  document.getElementById('calPopup')?.classList.add('open');
+  const popup = document.getElementById('calPopup');
+  if (popup) popup.classList.add('open');
   document.body.style.overflow = 'hidden';
+  initSwipeToClose(popup);
 }
 
 function closeCalPopup() {
   document.getElementById('calOverlay')?.classList.remove('open');
   document.getElementById('calPopup')?.classList.remove('open');
   document.body.style.overflow = '';
+}
+
+/* Swipe-down to close — mobile bottom sheet */
+function initSwipeToClose(popup) {
+  if (!popup) return;
+  // Avoid attaching multiple listeners
+  if (popup._swipeInit) return;
+  popup._swipeInit = true;
+
+  let startY = 0;
+  let currentY = 0;
+  let isDragging = false;
+
+  popup.addEventListener('touchstart', (e) => {
+    // Only trigger if scrolled to top of popup content
+    if (popup.scrollTop > 0) return;
+    startY = e.touches[0].clientY;
+    isDragging = true;
+    popup.style.transition = 'none';
+  }, { passive: true });
+
+  popup.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    currentY = e.touches[0].clientY;
+    const deltaY = currentY - startY;
+    if (deltaY > 0) {
+      popup.style.transform = `translateY(${deltaY}px)`;
+    }
+  }, { passive: true });
+
+  popup.addEventListener('touchend', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    popup.style.transition = '';
+    const deltaY = currentY - startY;
+    if (deltaY > 100) {
+      popup.style.transform = '';
+      closeCalPopup();
+    } else {
+      popup.style.transform = '';
+    }
+  });
 }
 
 /* ============================================================
