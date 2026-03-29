@@ -629,9 +629,10 @@
   /* ── Back button — simple inline, natural flow ── */
   .back-btn {
     display: inline-flex;
+    align-items: center;
     margin: 0;
     padding: 16px 20px 0;
-    font-size: 0.75rem;
+    font-size: 0.92rem;
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -640,6 +641,19 @@
     border-bottom: none;
     width: auto;
     z-index: auto;
+    gap: 7px;
+  }
+
+  .back-arrow {
+    font-size: 0.92rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    margin-top: 0;
+  }
+
+  .back-label {
+    line-height: 1;
   }
 
   /* ── Header — flows naturally after back button ── */

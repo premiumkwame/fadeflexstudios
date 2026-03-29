@@ -414,15 +414,20 @@ function initSwipeToClose(popup) {
     if (!isDragging) return;
     isDragging = false;
     const delta = currentY - startY;
-    popup.style.transition = '';          // restore CSS transition
     if (delta > 110) {
-      popup.style.transform = `translateY(100%)`;
+      // Apply the slide-down transition BEFORE moving — prevents the spring-up glitch
+      popup.style.transition = 'transform 0.38s cubic-bezier(0.4, 0, 1, 1)';
+      popup.style.transform  = 'translateY(110%)';
       setTimeout(() => {
-        popup.style.transform = '';
+        popup.style.transition = '';
+        popup.style.transform  = '';
         closeCalPopup();
-      }, 380);
+      }, 400);
     } else {
-      popup.style.transform = '';         // snap back
+      // Snap back with a smooth spring
+      popup.style.transition = 'transform 0.32s cubic-bezier(0.22, 1, 0.36, 1)';
+      popup.style.transform  = '';
+      setTimeout(() => { popup.style.transition = ''; }, 340);
     }
   };
 
