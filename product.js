@@ -365,9 +365,8 @@ function openCalPopup() {
   document.getElementById('calOverlay')?.classList.add('open');
   const popup = document.getElementById('calPopup');
   if (popup) {
-    // Reset any leftover transform from a previous swipe before opening
-    popup.style.transform  = '';
     popup.style.transition = '';
+    popup.style.transform  = '';
     popup.classList.add('open');
   }
   document.body.style.overflow = 'hidden';
@@ -377,8 +376,8 @@ function openCalPopup() {
 function closeCalPopup() {
   const popup = document.getElementById('calPopup');
   if (popup) {
-    popup.style.transform  = '';
     popup.style.transition = '';
+    popup.style.transform  = '';
     popup.classList.remove('open');
   }
   document.getElementById('calOverlay')?.classList.remove('open');
@@ -395,11 +394,11 @@ function initSwipeToClose(popup) {
   let isDragging = false;
 
   popup.addEventListener('touchstart', (e) => {
-    // Don't hijack if user is scrolling down through content
     if (popup.scrollTop > 10) return;
     startY     = e.touches[0].clientY;
     currentY   = startY;
     isDragging = true;
+    // Kill CSS transition so drag follows finger exactly
     popup.style.transition = 'none';
   }, { passive: true });
 
@@ -414,25 +413,22 @@ function initSwipeToClose(popup) {
     if (!isDragging) return;
     isDragging = false;
     const delta = currentY - startY;
+
+    // Re-enable transition BEFORE changing transform so browser animates it
+    popup.style.transition = '';
+
     if (delta > 110) {
-      // Apply the slide-down transition BEFORE moving — prevents the spring-up glitch
-      popup.style.transition = 'transform 0.38s cubic-bezier(0.4, 0, 1, 1)';
-      popup.style.transform  = 'translateY(110%)';
-      setTimeout(() => {
-        popup.style.transition = '';
-        popup.style.transform  = '';
-        closeCalPopup();
-      }, 400);
+      // Let closeCalPopup remove .open — CSS transition takes it to translateY(110%)
+      closeCalPopup();
     } else {
-      // Snap back with a smooth spring
-      popup.style.transition = 'transform 0.32s cubic-bezier(0.22, 1, 0.36, 1)';
-      popup.style.transform  = '';
-      setTimeout(() => { popup.style.transition = ''; }, 340);
+      // Not far enough — snap back to open position
+      popup.style.transform = '';
     }
   };
 
   popup.addEventListener('touchend',    endSwipe);
   popup.addEventListener('touchcancel', () => {
+    if (!isDragging) return;
     isDragging = false;
     popup.style.transition = '';
     popup.style.transform  = '';

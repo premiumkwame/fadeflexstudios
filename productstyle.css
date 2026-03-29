@@ -374,7 +374,7 @@
 
 .cal-popup {
   position: fixed;
-  bottom: -110%;
+  bottom: 0;
   left: 0; right: 0;
   z-index: 1060;
   background: var(--bg-card);
@@ -383,10 +383,11 @@
   padding: 1.4rem 1.4rem 3rem;
   max-height: 88vh;
   overflow-y: auto;
-  transition: bottom 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(110%);
+  transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 -10px 50px rgba(0,0,0,0.6);
 }
-.cal-popup.open { bottom: 0; }
+.cal-popup.open { transform: translateY(0); }
 
 /* Drag handle */
 .cal-popup::before {
